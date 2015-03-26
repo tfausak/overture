@@ -37,3 +37,35 @@ f .> g = compose f g
 infixr 9 <.
 (<.) :: (b -> c) -> (a -> b) -> (a -> c)
 g <. f = compose f g
+
+{- |
+    >>> apply 3 (+ 1)
+    4
+
+    >>> map (apply 3) [(+ 1), (* 2)]
+    [4,6]
+-}
+apply :: a -> (a -> b) -> b
+apply x f = f x
+
+{- |
+    >>> 3 |> (+ 1)
+    4
+
+    >>> map (3 |>) [(+ 1), (* 2)]
+    [4,6]
+-}
+infixl 0 |>
+(|>) :: a -> (a -> b) -> b
+x |> f = apply x f
+
+{- |
+    >>> (+ 1) <| 3
+    4
+
+    >>> map (<| 3) [(+ 1), (* 2)]
+    [4,6]
+-}
+infixr 0 <|
+(<|) :: (a -> b) -> a -> b
+f <| x = apply x f
