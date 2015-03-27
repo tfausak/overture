@@ -1,5 +1,27 @@
 module Overture where
 
+-- * Constant function
+
+{- |
+    <https://en.wikipedia.org/wiki/Constant_function Constant function>.
+
+    Use this function to always return some value, regardless of what the
+    other argument is.
+
+    >>> always True False
+    True
+
+    This can be useful with higher-order functions. For example, this creates
+    a list of three @True@s.
+
+    >>> map (always True) [1 .. 3]
+    [True,True,True]
+
+    This is like the 'const' function from the "Prelude".
+-}
+always :: a -> b -> a
+always x _ = x
+
 -- * Function composition
 
 {- |
