@@ -1,3 +1,13 @@
+{- |
+    Overture is an alternative to some of the "Prelude". It borrows ideas from
+    <http://elm-lang.org Elm> and <http://fsharp.org F#>. It aims to provide a
+    more readable set of functions in order to make Haskell easier to use.
+
+    Overture does not export anything that conflicts with the "Prelude". To
+    use it, simply import it.
+
+    >>> import Overture
+-}
 module Overture where
 
 -- * Identity function
