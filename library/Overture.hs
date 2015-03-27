@@ -1,5 +1,28 @@
 module Overture where
 
+-- * Identity function
+
+{- |
+    <https://en.wikipedia.org/wiki/Identity_function Identity function>.
+
+    Use this function to always return the value it was given.
+
+    >>> identity True
+    True
+
+    This is useful when constructing a function that returns another function.
+
+    >>> let f x = if even x then recip else identity
+    >>> f 2 10
+    0.1
+    >>> f 3 10
+    10.0
+
+    This is like the 'id' function from the "Prelude".
+-}
+identity :: a -> a
+identity x = x
+
 -- * Constant function
 
 {- |
