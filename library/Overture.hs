@@ -218,7 +218,7 @@ f <| x = apply x f
 
     This is the strict version of 'apply'. It evaluates its argument with
     'seq' before applying it to the given function. In other words,
-    @'apply'' x f@ is the same as @x \`seq\` f x@.
+    @'apply'' x f@ is the same as @x \`seq\` 'apply' x f@.
 
     >>> apply' undefined (const 0)
     *** Exception: Prelude.undefined
