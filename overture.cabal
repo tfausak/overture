@@ -5,9 +5,9 @@ build-type: Simple
 license: MIT
 license-file: LICENSE.md
 maintainer: Taylor Fausak <taylor@fausak.me>
-synopsis: TODO
+synopsis: An alternative to some of the Prelude.
 description:
-    TODO
+    <https://github.com/tfausak/overture>
 category: Prelude
 extra-source-files:
     CHANGELOG.md
