@@ -77,7 +77,7 @@ always x _ = x
     >>> g 3
     512
 
-    This is like the function form of the '.' operator from the "Prelude".
+    This is like the '.' operator from the "Prelude".
 -}
 compose :: (a -> b) -> (b -> c) -> (a -> c)
 compose f g = \ x -> g (f x)
