@@ -95,7 +95,7 @@ compose f g = \ x -> g (f x)
     8
 
     When reading code, it is useful to pronounce this operator as "and then".
-    So the above example could be read as: Add one, /and then/ multiply by
+    So the above example could be read as: "Add one, /and then/ multiply by
     two".
 
     When composing many functions, it's easier to use this operator than
