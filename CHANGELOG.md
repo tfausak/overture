@@ -1,5 +1,10 @@
 # Change log
 
+## v0.0.4 (2014-03-31)
+
+-   Removed `identity` function.
+-   Removed `always` function.
+
 ## v0.0.3 (2015-03-30)
 
 -   Improved documentation.
