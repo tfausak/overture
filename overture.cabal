@@ -34,8 +34,7 @@ test-suite doctest
     build-depends:
         base -any,
         overture -any,
-        doctest ==0.9.*,
-        Glob ==0.7.*
+        doctest ==0.9.*
     default-language: Haskell98
     ghc-options: -Wall -Werror
 
