@@ -58,29 +58,6 @@
 -}
 module Overture where
 
--- * Identity function
-
-{- |
-    <https://en.wikipedia.org/wiki/Identity_function Identity function>.
-    This is like the 'id' function from the "Prelude".
-
-    This function returns the value it was given. The result of @'identity' x@
-    is @x@.
-
-    >>> identity True
-    True
-
-    This is useful when constructing functions that return other functions.
-
-    >>> let f x = if x then recip else identity
-    >>> f False 10
-    10.0
-    >>> f True 10
-    0.1
--}
-identity :: a -> a
-identity x = x
-
 -- * Constant function
 
 {- |
