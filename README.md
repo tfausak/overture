@@ -30,17 +30,17 @@
 
 To use Overture in a Cabal package, add it to your Cabal file.
 
-~~~
+```
 build-depends:
     overture ==0.0.*
-~~~
+```
 
 For other use cases, install it with `cabal-install`.
 
-~~~ {.sh}
+``` sh
 $ cabal update
 $ cabal install 'overture ==0.0.*'
-~~~
+```
 
 Overture uses [Semantic Versioning][]. Check out [the change log][] for a
 detailed list of changes.
@@ -50,9 +50,9 @@ detailed list of changes.
 Overture is designed to be imported unqualified. It does not export anything
 that conflicts with the Prelude. To get started, simply import it.
 
-~~~ {.haskell}
+``` hs
 import Overture
-~~~
+```
 
 Check out [the Haddock documentation][] for more information about the
 functions Overture provides.
@@ -62,13 +62,13 @@ functions Overture provides.
 If you want to help develop Overture, you'll need Git, GHC, and Cabal. To get
 started, clone the repository and install the dependencies.
 
-~~~ {.sh}
+``` sh
 $ git clone https://github.com/tfausak/overture
 $ cd overture
 
 $ cabal sandbox init
 $ cabal install --enable-benchmarks --enable-tests --only-dependencies
-~~~
+```
 
 Once you've done that, you should be able to use the normal Cabal tools
 (`bench`, `test`, `repl`, and `haddock` in particular). If you've made changes
