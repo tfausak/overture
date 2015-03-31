@@ -33,7 +33,8 @@ test-suite doctest
     main-is: DocTest.hs
     build-depends:
         base -any,
-        doctest ==0.9.*
+        doctest ==0.9.*,
+        Glob ==0.7.*
     default-language: Haskell98
     hs-source-dirs: test-suite
     ghc-options: -Wall -Werror

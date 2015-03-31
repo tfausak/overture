@@ -1,6 +1,7 @@
 module Main (main) where
 
+import System.FilePath.Glob (glob)
 import Test.DocTest (doctest)
 
 main :: IO ()
-main = doctest ["library/Overture.hs"]
+main = glob "library/**/*.hs" >>= doctest
