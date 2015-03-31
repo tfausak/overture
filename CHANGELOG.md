@@ -1,5 +1,8 @@
 # Change log
 
+-   Removed Safe language extension.
+-   Relaxed dependency on `base` to allow for older versions.
+
 ## v0.0.4 (2014-03-31)
 
 -   Removed `identity` function.
