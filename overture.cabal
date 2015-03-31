@@ -33,6 +33,7 @@ test-suite doctest
     main-is: DocTest.hs
     build-depends:
         base -any,
+        overture -any,
         doctest ==0.9.*,
         Glob ==0.7.*
     default-language: Haskell98
