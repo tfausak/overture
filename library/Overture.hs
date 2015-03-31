@@ -7,9 +7,7 @@
 
     Overture does not export anything that conflicts with the "Prelude".
     Whenever possible, it tries not to conflict with any other well-known
-    packages. (The only exceptions are the 'Data.Sequence.|>' and
-    'Data.Sequence.<|' operators from "Data.Sequence".) The recommended way to
-    use Overture is to import it unqualified.
+    packages. The recommended way to use Overture is to import it unqualified.
 
     >>> import Overture
 
