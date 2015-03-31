@@ -1,5 +1,9 @@
 # Change log
 
+## v0.0.3 (2015-03-30)
+
+-   Improved documentation.
+
 ## v0.0.2 (2015-03-29)
 
 -   Improved documentation.
