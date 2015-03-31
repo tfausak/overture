@@ -3,4 +3,4 @@ module Main (main) where
 import Test.DocTest (doctest)
 
 main :: IO ()
-main = doctest ["library/Overture.hs"]
+main = doctest ["Overture.hs"]
