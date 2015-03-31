@@ -23,7 +23,7 @@ library
     exposed-modules:
         Overture
     build-depends:
-        base ==4.*
+        base <5
     default-language: Haskell98
     hs-source-dirs: library
     ghc-options: -Wall
