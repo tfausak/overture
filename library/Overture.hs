@@ -1,13 +1,62 @@
 {-# LANGUAGE Safe #-}
 
 {- |
-    Overture is an alternative to some of the "Prelude". It borrows ideas from
-    <http://elm-lang.org Elm> and <http://fsharp.org F#>. It aims to provide a
-    more readable set of functions in order to make Haskell easier to use. It
-    does not export anything that conflicts with the "Prelude". To use it,
-    simply import it.
+    Overture is an alternative to some of the "Prelude". It aims to make
+    Haskell easier to read by providing a few well-named functions and
+    operators.
+
+    Overture does not export anything that conflicts with the "Prelude".
+    Whenever possible, it tries not to conflict with any other well-known
+    packages. (The only exceptions are the 'Data.Sequence.|>' and
+    'Data.Sequence.<|' operators from "Data.Sequence".) The recommended way to
+    use Overture is to import it unqualified.
 
     >>> import Overture
+
+    == Motivation
+
+    I have been using Haskell for more than I year. In that time, I created
+    libraries and executables. I deployed Haskell to production at my day job.
+    I wrote several blog posts about Haskell. All this to say that I'm not a
+    complete beginner.
+
+    Yet I sometimes have trouble undestanding Haskell code. Usually function
+    composition and pointfree expressions are to blame. To me, they read
+    backwards. Take this function for example.
+
+    >>> let f = negate . recip . succ
+
+    Is it immediately obvious to you what this does? If so, this package
+    probably isn't for you. For me, I start reading "negate" before I realize
+    that this is a chain of composed functions, which means I have to start at
+    the end. Eventually I end up understanding that this function adds one,
+    then takes the reciprocal, then negates.
+
+    >>> f 3
+    -0.25
+
+    Let's explore some alternative ways to write this function.
+
+    >>> let f1 x = negate . recip . succ $ x
+    >>> let f2 x = negate . recip $ succ x
+    >>> let f3 x = negate (recip (succ x))
+
+    Of those, I like reading @f3@ the best. But the parentheses add some visual
+    noise and we still have to understand it from the inside out. Let's see how
+    you might write this function with Overture.
+
+    >>> let f4 x = negate <. recip <. succ <| x
+    >>> let f5 x = negate <. recip <| succ x
+    >>> let f6 = negate <. recip <. succ
+    >>> let f7 = succ .> recip .> negate
+    >>> let f8 x = succ x |> recip .> negate
+    >>> let f9 x = x |> succ .> recip .> negate
+
+    @f6@ is basically the same as the original @f@, but it hints at which way
+    the data will be flowing through it. @f9@ is my favorite because I can
+    easily see that I take some value and apply a series of transformations to
+    it. If I wanted to express this function in the pointfree style, I would
+    prefer @f7@ because it reads from left to right.
 -}
 module Overture where
 
