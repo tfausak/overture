@@ -1,5 +1,3 @@
-{-# LANGUAGE Safe #-}
-
 {- |
     Overture is an alternative to some of the "Prelude". It aims to make
     Haskell easier to read by providing a few well-named functions and
