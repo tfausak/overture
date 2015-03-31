@@ -30,14 +30,13 @@ library
 
 test-suite doctest
     type: exitcode-stdio-1.0
-    main-is: DocTest.hs
+    main-is: Test.hs
     build-depends:
         base -any,
         overture -any,
         doctest ==0.9.*,
         Glob ==0.7.*
     default-language: Haskell98
-    hs-source-dirs: test-suite
     ghc-options: -Wall -Werror
 
 benchmark bench
