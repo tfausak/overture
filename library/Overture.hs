@@ -58,26 +58,6 @@
 -}
 module Overture where
 
--- * Constant function
-
-{- |
-    <https://en.wikipedia.org/wiki/Constant_function Constant function>.
-    This is like the 'const' function from the "Prelude".
-
-    This function takes two arguments and always returns the first. In other
-    words, it ignores its second argument. The result of @'always' x y@ is @x@.
-
-    >>> always True undefined
-    True
-
-    This can be useful with higher-order functions like 'map'.
-
-    >>> map (always True) [1 .. 3]
-    [True,True,True]
--}
-always :: a -> b -> a
-always x _ = x
-
 -- * Function composition
 
 {- |
@@ -253,7 +233,7 @@ f <| x = apply x f
     'seq' before applying it to the given function. In other words,
     @'apply'' x f@ is the same as @x \`seq\` 'apply' x f@.
 
-    >>> apply' undefined (always 0)
+    >>> apply' undefined (const 0)
     *** Exception: Prelude.undefined
 -}
 apply' :: a -> (a -> b) -> b
@@ -265,7 +245,7 @@ apply' x f = x `seq` apply x f
 
     This is the strict version of the '|>' operator.
 
-    >>> undefined !> always 0
+    >>> undefined !> const 0
     *** Exception: Prelude.undefined
 -}
 infixl 0 !>
@@ -278,7 +258,7 @@ x !> f = apply' x f
 
     This is the strict version of the '<!' operator.
 
-    >>> always 0 <! undefined
+    >>> const 0 <! undefined
     *** Exception: Prelude.undefined
 -}
 infixr 0 <!
