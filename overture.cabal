@@ -48,5 +48,4 @@ benchmark bench
         overture -any,
         criterion ==1.*
     default-language: Haskell98
-    hs-source-dirs: benchmark
     ghc-options: -Wall -Werror
