@@ -110,7 +110,7 @@ always x _ = x
     This is like the '.' operator from the "Prelude".
 
     This function combines two other functions. The result of @'compose' f g@
-    is a new function the applies @f@ first and then applies @g@. In other
+    is a new function that applies @f@ first and then applies @g@. In other
     words, @'compose' f g x@ is the same as @g (f x)@.
 
     >>> let f = compose succ recip
