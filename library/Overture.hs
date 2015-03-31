@@ -129,7 +129,9 @@ compose f g = \ x -> g (f x)
 
 {- |
     Left-associative 'compose' operator.
-    This is like a flipped version of '.' operator from the "Prelude".
+    This is like a flipped version of the '.' operator from the "Prelude".
+    It is also similar to the 'Control.Category.>>>' operator from
+    "Control.Category".
 
     This operator combines two other functions more naturally than 'compose'.
     The result of @f '.>' g@ is a new function that applies @f@ first and then
@@ -156,6 +158,8 @@ f .> g = compose f g
 {- |
     Right-associative 'compose' operator.
     This is like the '.' operator from the "Prelude".
+    It is also similar to the 'Control.Category.<<<' operator from
+    "Control.Category".
 
     Sometimes it is more convenient to combine functions from right to left.
     The result of @g '<.' f@ is a new function that applies @g@ but first
