@@ -6,16 +6,16 @@ import Overture
 main :: IO ()
 main = defaultMain
     [ bgroup "apply"
-        [ bench "id x" <| whnf id x
-        , bench "apply id x" <| whnf (apply x) id
-        , bench "x |> id" <| whnf (x |>) id
-        , bench "id <| x" <| whnf (<| x) id
+        [ bench "f x" <| whnf f x
+        , bench "apply f x" <| whnf (apply x) f
+        , bench "x |> f" <| whnf (x |>) f
+        , bench "f <| x" <| whnf (<| x) f
         ]
     , bgroup "apply'"
-        [ bench "seq x (id x)" <| whnf (seq x) (id x)
-        , bench "apply' id x" <| whnf (apply' x) id
-        , bench "x !> id" <| whnf (x !>) id
-        , bench "id <! x" <| whnf (<! x) id
+        [ bench "seq x (f x)" <| whnf (seq x) (f x)
+        , bench "apply' f x" <| whnf (apply' x) f
+        , bench "x !> f" <| whnf (x !>) f
+        , bench "f <! x" <| whnf (<! x) f
         ]
     , bgroup "compose"
         [ bench "f . g" <| whnf (f .) g
