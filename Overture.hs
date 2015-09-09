@@ -49,6 +49,25 @@ not x = case x of
     False -> True
     True -> False
 
+-- ** Maybe
+
+data Maybe a
+    = Nothing
+    | Just a
+
+maybe :: b -> (a -> b) -> Maybe a -> b
+maybe x f my = case my of
+    Nothing -> x
+    Just y -> f y
+
+isNothing :: Maybe a -> Boolean
+isNothing x = case x of
+    Nothing -> True
+    Just _ -> False
+
+isJust :: Maybe a -> Boolean
+isJust x = not (isNothing x)
+
 -- * Classes
 
 -- ** Categories
@@ -77,6 +96,11 @@ class Functor f where
 instance Functor ((->) a) where
     map = (<.)
 
+instance Functor Maybe where
+    map f mx = case mx of
+        Nothing -> Nothing
+        Just x -> Just (f x)
+
 (<$>) :: (Functor f) => (a -> b) -> f a -> f b
 (<$>) = map
 
@@ -98,6 +122,13 @@ instance Applicative ((->) a) where
 
     apply f g = \ x -> f x (g x)
 
+instance Applicative Maybe where
+    pure = Just
+
+    apply mf mx = case mf of
+        Nothing -> Nothing
+        Just f -> map f mx
+
 (<*>) :: (Applicative p) => p (a -> b) -> p a -> p b
 (<*>) = apply
 
@@ -118,6 +149,9 @@ class (Applicative m) => Monad m where
 instance Monad ((->) a) where
     bind f g = \ x -> g (f x) x
 
+instance Monad Maybe where
+    bind mx f = join (map f mx)
+
 (>>=) :: (Monad m) => m a -> (a -> m b) -> m b
 (>>=) = bind
 
@@ -129,3 +163,6 @@ x >> y = x >>= always y
 
 (<<) :: (Monad m) => m a -> m b -> m a
 (<<) = flip (>>)
+
+join :: (Monad m) => m (m a) -> m a
+join x = x >>= identity
