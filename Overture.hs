@@ -46,3 +46,24 @@ x $> y = always y <$> x
 
 (<$) :: (Functor f) => a -> f b -> f a
 (<$) = flip ($>)
+
+-- ** Applicatives
+
+class (Functor p) => Applicative p where
+    pure :: a -> p a
+
+    apply :: p (a -> b) -> p a -> p b
+
+instance Applicative ((->) a) where
+    pure x = always x
+
+    apply f g = \ x -> f x (g x)
+
+(<*>) :: (Applicative p) => p (a -> b) -> p a -> p b
+(<*>) = apply
+
+(*>) :: (Applicative p) => p a -> p b -> p b
+x *> y = (x $> identity) <*> y
+
+(<*) :: (Applicative p) => p a -> p b -> p a
+(<*) = flip (*>)
