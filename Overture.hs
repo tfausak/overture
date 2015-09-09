@@ -12,6 +12,43 @@ always x = \ _ -> x
 flip :: (a -> b -> c) -> (b -> a -> c)
 flip f = \ x y -> f y x
 
+-- * Types
+
+-- ** Boolean
+
+data Boolean
+    = False
+    | True
+
+otherwise :: Boolean
+otherwise = True
+
+boolean :: a -> a -> Boolean -> a
+boolean x y p = case p of
+    False -> y
+    True -> x
+
+and :: Boolean -> Boolean -> Boolean
+and x y = case x of
+    False -> False
+    True -> y
+
+(&&) :: Boolean -> Boolean -> Boolean
+(&&) = and
+
+or :: Boolean -> Boolean -> Boolean
+or x y = case x of
+    False -> y
+    True -> True
+
+(||) :: Boolean -> Boolean -> Boolean
+(||) = or
+
+not :: Boolean -> Boolean
+not x = case x of
+    False -> True
+    True -> False
+
 -- * Classes
 
 -- ** Categories
