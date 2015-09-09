@@ -68,6 +68,25 @@ isNothing x = case x of
 isJust :: Maybe a -> Boolean
 isJust x = not (isNothing x)
 
+-- ** Either
+
+data Either a b
+    = Left a
+    | Right b
+
+either :: (a -> c) -> (b -> c) -> Either a b -> c
+either f g ex = case ex of
+    Left x -> f x
+    Right x -> g x
+
+isLeft :: Either a b -> Boolean
+isLeft x = case x of
+    Left _ -> True
+    Right _ -> False
+
+isRight :: Either a b -> Boolean
+isRight x = not (isLeft x)
+
 -- * Classes
 
 -- ** Categories
@@ -101,6 +120,11 @@ instance Functor Maybe where
         Nothing -> Nothing
         Just x -> Just (f x)
 
+instance Functor (Either a) where
+    map f ex = case ex of
+        Left x -> Left x
+        Right x -> Right (f x)
+
 (<$>) :: (Functor f) => (a -> b) -> f a -> f b
 (<$>) = map
 
@@ -125,9 +149,12 @@ instance Applicative ((->) a) where
 instance Applicative Maybe where
     pure = Just
 
-    apply mf mx = case mf of
-        Nothing -> Nothing
-        Just f -> map f mx
+    apply mf mx = maybe Nothing (<$> mx) mf
+
+instance Applicative (Either a) where
+    pure = Right
+
+    apply ef ex = either Left (<$> ex) ef
 
 (<*>) :: (Applicative p) => p (a -> b) -> p a -> p b
 (<*>) = apply
@@ -151,6 +178,9 @@ instance Monad ((->) a) where
 
 instance Monad Maybe where
     bind mx f = join (map f mx)
+
+instance Monad (Either a) where
+    bind ex f = join (map f ex)
 
 (>>=) :: (Monad m) => m a -> (a -> m b) -> m b
 (>>=) = bind
