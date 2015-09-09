@@ -2,6 +2,8 @@
 
 module Overture where
 
+import qualified Prelude as Prelude
+
 -- * Functions
 
 always :: a -> (b -> a)
@@ -67,3 +69,26 @@ x *> y = (x $> identity) <*> y
 
 (<*) :: (Applicative p) => p a -> p b -> p a
 (<*) = flip (*>)
+
+-- ** Monads
+
+class (Applicative m) => Monad m where
+    bind :: m a -> (a -> m b) -> m b
+
+    fail :: Prelude.String -> m a
+    fail x = Prelude.error x
+
+instance Monad ((->) a) where
+    bind f g = \ x -> g (f x) x
+
+(>>=) :: (Monad m) => m a -> (a -> m b) -> m b
+(>>=) = bind
+
+(=<<) :: (Monad m) => (a -> m b) -> m a -> m b
+(=<<) = flip (>>=)
+
+(>>) :: (Monad m) => m a -> m b -> m b
+x >> y = x >>= always y
+
+(<<) :: (Monad m) => m a -> m b -> m a
+(<<) = flip (>>)
