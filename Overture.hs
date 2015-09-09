@@ -4,6 +4,9 @@ module Overture where
 
 -- * Functions
 
+always :: a -> (b -> a)
+always x = \ _ -> x
+
 flip :: (a -> b -> c) -> (b -> a -> c)
 flip f = \ x y -> f y x
 
@@ -26,3 +29,20 @@ instance Category (->) where
 
 (<.) :: (Category g) => g b c -> g a b -> g a c
 (<.) = flip (.>)
+
+-- ** Functors
+
+class Functor f where
+    map :: (a -> b) -> f a -> f b
+
+instance Functor ((->) a) where
+    map = (<.)
+
+(<$>) :: (Functor f) => (a -> b) -> f a -> f b
+(<$>) = map
+
+($>) :: (Functor f) => f a -> b -> f b
+x $> y = always y <$> x
+
+(<$) :: (Functor f) => a -> f b -> f a
+(<$) = flip ($>)
