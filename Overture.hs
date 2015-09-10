@@ -107,6 +107,23 @@ f .> g = compose f g
 (<.) :: (Category g) => g b c -> g a b -> g a c
 f <. g = compose g f
 
+-- ** Monoids
+
+class Monoid m where
+    empty :: m a
+
+    append :: m a -> m a -> m a
+
+instance Monoid [] where
+    empty = []
+
+    append xs ys = case xs of
+        [] -> ys
+        (z : zs) -> z : append zs ys
+
+(++) :: (Monoid m) => m a -> m a -> m a
+xs ++ ys = append xs ys
+
 -- ** Functors
 
 class Functor f where
@@ -114,6 +131,11 @@ class Functor f where
 
 instance Functor ((->) a) where
     map = (<.)
+
+instance Functor [] where
+    map f xs = case xs of
+        [] -> []
+        (y : ys) -> f y : map f ys
 
 instance Functor Maybe where
     map f mx = case mx of
@@ -146,6 +168,14 @@ instance Applicative ((->) a) where
 
     apply f g = \ x -> f x (g x)
 
+instance Applicative [] where
+    pure x = [x]
+
+    apply fs xs = case (fs, xs) of
+        ([], _) -> []
+        (_, []) -> []
+        (g : gs, y : ys) -> g y : apply gs ys
+
 instance Applicative Maybe where
     pure = Just
 
@@ -175,6 +205,11 @@ class (Applicative m) => Monad m where
 
 instance Monad ((->) a) where
     bind f g = \ x -> g (f x) x
+
+instance Monad [] where
+    bind xs f = case xs of
+        [] -> []
+        (y : ys) -> f y ++ bind ys f
 
 instance Monad Maybe where
     bind mx f = join (map f mx)
