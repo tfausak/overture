@@ -156,6 +156,26 @@ x $> y = map (always y) x
 (<$) :: (Functor f) => a -> f b -> f a
 x <$ y = map (always x) y
 
+-- ** Folds
+
+class Foldable f where
+    foldr :: (a -> b -> b) -> b -> f a -> b
+
+instance Foldable [] where
+    foldr f x ys = case ys of
+        [] -> x
+        (z : zs) -> foldr f (f z x) zs
+
+instance Foldable Maybe where
+    foldr f x my = case my of
+        Nothing -> x
+        Just y -> f y x
+
+instance Foldable (Either a) where
+    foldr f x ey = case ey of
+        Left _ -> x
+        Right y -> f y x
+
 -- ** Applicatives
 
 class (Functor p) => Applicative p where
