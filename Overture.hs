@@ -34,7 +34,7 @@ and x y = case x of
     True -> y
 
 (&&) :: Boolean -> Boolean -> Boolean
-(&&) = and
+x && y = and x y
 
 or :: Boolean -> Boolean -> Boolean
 or x y = case x of
@@ -42,7 +42,7 @@ or x y = case x of
     True -> True
 
 (||) :: Boolean -> Boolean -> Boolean
-(||) = or
+x || y = or x y
 
 not :: Boolean -> Boolean
 not x = case x of
@@ -61,12 +61,12 @@ maybe x f my = case my of
     Just y -> f y
 
 isNothing :: Maybe a -> Boolean
-isNothing x = case x of
+isNothing mx = case mx of
     Nothing -> True
     Just _ -> False
 
 isJust :: Maybe a -> Boolean
-isJust x = not (isNothing x)
+isJust mx = not (isNothing mx)
 
 -- ** Either
 
@@ -80,12 +80,12 @@ either f g ex = case ex of
     Right x -> g x
 
 isLeft :: Either a b -> Boolean
-isLeft x = case x of
+isLeft ex = case ex of
     Left _ -> True
     Right _ -> False
 
 isRight :: Either a b -> Boolean
-isRight x = not (isLeft x)
+isRight ex = not (isLeft ex)
 
 -- * Classes
 
@@ -102,10 +102,10 @@ instance Category (->) where
     compose f g = \ x -> g (f x)
 
 (.>) :: (Category g) => g a b -> g b c -> g a c
-(.>) = compose
+f .> g = compose f g
 
 (<.) :: (Category g) => g b c -> g a b -> g a c
-(<.) = flip (.>)
+f <. g = compose g f
 
 -- ** Functors
 
@@ -126,13 +126,13 @@ instance Functor (Either a) where
         Right x -> Right (f x)
 
 (<$>) :: (Functor f) => (a -> b) -> f a -> f b
-(<$>) = map
+f <$> x = map f x
 
 ($>) :: (Functor f) => f a -> b -> f b
-x $> y = always y <$> x
+x $> y = map (always y) x
 
 (<$) :: (Functor f) => a -> f b -> f a
-(<$) = flip ($>)
+x <$ y = map (always x) y
 
 -- ** Applicatives
 
@@ -149,12 +149,12 @@ instance Applicative ((->) a) where
 instance Applicative Maybe where
     pure = Just
 
-    apply mf mx = maybe Nothing (<$> mx) mf
+    apply mf x = maybe Nothing (\ f -> map f x) mf
 
 instance Applicative (Either a) where
     pure = Right
 
-    apply ef ex = either Left (<$> ex) ef
+    apply ef x = either Left (\ f -> map f x) ef
 
 (<*>) :: (Applicative p) => p (a -> b) -> p a -> p b
 (<*>) = apply
@@ -183,16 +183,16 @@ instance Monad (Either a) where
     bind ex f = join (map f ex)
 
 (>>=) :: (Monad m) => m a -> (a -> m b) -> m b
-(>>=) = bind
+x >>= f = bind x f
 
 (=<<) :: (Monad m) => (a -> m b) -> m a -> m b
-(=<<) = flip (>>=)
+f =<< x = bind x f
 
 (>>) :: (Monad m) => m a -> m b -> m b
-x >> y = x >>= always y
+x >> y = bind x (always y)
 
 (<<) :: (Monad m) => m a -> m b -> m a
-(<<) = flip (>>)
+x << y = bind y (always x)
 
 join :: (Monad m) => m (m a) -> m a
-join x = x >>= identity
+join x = bind x identity
